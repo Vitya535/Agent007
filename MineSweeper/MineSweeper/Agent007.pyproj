@@ -3,16 +3,18 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>cf6fa1c1-ccd7-4f84-a803-7d250b8629d3</ProjectGuid>
-    <ProjectHome>.</ProjectHome>
-    <StartupFile>MineSweeper.py</StartupFile>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>Agent.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <IsWindowsApplication>True</IsWindowsApplication>
-    <InterpreterId>IronPython|2.7-32</InterpreterId>
+    <InterpreterId>
+    </InterpreterId>
     <LaunchProvider>IronPython (.NET) launcher</LaunchProvider>
     <OutputPath>.</OutputPath>
-    <Name>MineSweeper</Name>
+    <Name>Agent007</Name>
     <RootNamespace>MineSweeper</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -24,10 +26,15 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="MineSweeper.py" />
-  </ItemGroup>
-  <ItemGroup>
-    <InterpreterReference Include="IronPython|2.7-32" />
+    <Compile Include="Agent.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HelpWindow.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RulesWindow.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

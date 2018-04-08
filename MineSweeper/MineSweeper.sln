@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MineSweeper", "MineSweeper\MineSweeper.pyproj", "{CF6FA1C1-CCD7-4F84-A803-7D250B8629D3}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Agent007", "MineSweeper\Agent007.pyproj", "{CF6FA1C1-CCD7-4F84-A803-7D250B8629D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,5 +16,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {34096159-F477-4422-B8B3-16171F840CBC}
 	EndGlobalSection
 EndGlobal
