@@ -29,6 +29,12 @@
     <Compile Include="Agent.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FieldCell.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="HelpWindow.py">
       <SubType>Code</SubType>
     </Compile>
