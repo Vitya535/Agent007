@@ -35,10 +35,19 @@
     <Compile Include="Game.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ImagesForGame.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mine.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Player.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RulesWindow.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utils.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

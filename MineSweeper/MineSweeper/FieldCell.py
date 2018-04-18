@@ -1,11 +1,20 @@
 from PyQt5.QtWidgets import QPushButton, QMainWindow
-from random import randint
 
 class FieldCell(QPushButton):
-    def __init__(self, CountSteps:str, **kwargs):
-        return super().__init__(**kwargs)
+    def __init__(self, CountSteps:int, i:int, j:int, MainWindow:QMainWindow):
+        return super().__init__(str(CountSteps), MainWindow)
         self.CountSteps = CountSteps
-        # self.resize(30, 30)
-        # self.setParent(MainWindow)
-        # self.setText(CountSteps)
-        # self.move(30*(i+1), 30*(j+1))
+        self.i = i
+        self.j = j
+
+    @property
+    def getCountOfSteps(self)->int:
+        return self.CountSteps
+
+    @property
+    def get_X(self)->int:
+        return self.i
+
+    @property
+    def get_Y(self)->int:
+        return self.j

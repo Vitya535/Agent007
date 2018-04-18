@@ -2,7 +2,6 @@ import sys
 from PyQt5.QtWidgets import QWidget, QApplication, QMenuBar, QMainWindow, QMenu, QAction
 from RulesWindow import RulesWindow
 from Game import Game
-from random import randint
 
 class MainForm(QMainWindow):
     def __init__(self):
