@@ -1,10 +1,21 @@
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon 
 
 class IconsForGame():
-    @staticmethod
-    def ImgMine():
-        return QIcon("Мine.png") # Вместо этого вставить изображения
+    Mine, Player, Cross, Skull = QIcon('Images/Mine.png'), QIcon('Images/Player.png'), QIcon('Images/Cross.png'), QIcon('Images/Skull.jpg')
 
-    @staticmethod
-    def ImgPlayer():
-        return QIcon("Player.png") # Вместо этого вставить изображения
+    @property
+    def ImgMine()->QIcon:
+        return IconsForGame.Mine
+
+    @property
+    def ImgPlayer()->QIcon:
+        return IconsForGame.Player
+
+    @property
+    def ImgCross()->QIcon:
+        return IconsForGame.Cross
+
+    @property
+    def ImgSkull()->QIcon:
+        return IconsForGame.Skull
+

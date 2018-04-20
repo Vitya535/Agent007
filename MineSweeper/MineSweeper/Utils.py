@@ -1,6 +1,6 @@
-from Player import Player
+from Player import *
 from FieldCell import FieldCell
-from Game import Game
+from Game import *
 
 @staticmethod
 def isClickedAroundPlayer(cell:FieldCell)->tuple:

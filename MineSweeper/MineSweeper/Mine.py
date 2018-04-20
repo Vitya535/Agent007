@@ -2,8 +2,8 @@ from PyQt5.QtWidgets import QPushButton, QMainWindow
 from ImagesForGame import IconsForGame
 
 class Mine(QPushButton):
-    def __init__(self, text:str, i:int, j:int, MainWindow:QMainWindow):
-        return super().__init__(IconsForGame.ImgMine(), text, MainWindow)
+    def __init__(self, i:int, j:int, MainWindow:QMainWindow):
+        return super().__init__(IconsForGame.ImgMine(), "Мина", MainWindow)
         self.i = i
         self.j = j
 

@@ -1,7 +1,7 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QApplication, QMenuBar, QMainWindow, QMenu, QAction
+from PyQt5.QtWidgets import QApplication, QMenuBar, QMainWindow, QMenu, QAction
 from RulesWindow import RulesWindow
-from Game import Game
+from Game import *
 
 class MainForm(QMainWindow):
     def __init__(self):
@@ -44,7 +44,6 @@ class MainForm(QMainWindow):
         self.FieldMenu.addAction(self.LargeFieldAction)
 
         self.show()
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
