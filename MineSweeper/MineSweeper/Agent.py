@@ -1,29 +1,36 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMenuBar, QMainWindow, QMenu, QAction
+from PyQt5.QtWidgets import QApplication, QMenuBar, QMainWindow, QMenu, QAction, QLabel
+from PyQt5.QtGui import QFont
 from RulesWindow import RulesWindow
-from Game import *
+from Game import MyGame
 
 class MainForm(QMainWindow):
     def __init__(self):
         super().__init__()
         self.initUI()
-    
+
     def SmallFieldClicked(self):
-        Game.inst(10, 10, 5, self)  
+        MyGame.inst(10, 10, 5, self)
+        self.BoxesValue.setText("94")
+        self.GoalValue.setText("23")     
 
     def MediumFieldClicked(self):
-        Game.inst(15, 15, 7, self)
+        MyGame.inst(15, 15, 7, self)
+        self.BoxesValue.setText("217")
+        self.GoalValue.setText("54") 
 
     def LargeFieldClicked(self):
-        Game.inst(20, 20, 10, self)
+        MyGame.inst(20, 20, 10, self)
+        self.BoxesValue.setText("389")
+        self.GoalValue.setText("97") 
 
     def initUI(self):
-        self.resize(400, 400)
+        self.setMinimumSize(400, 400)
         self.move(300, 300)
         self.setWindowTitle('Агент 007')
 
         self.MenuForWindow = QMenuBar(self)
-        self.MenuForWindow.resize(400, 25)
+        self.MenuForWindow.resize(16777215, 25)
 
         self.RulesW = RulesWindow(self.MenuForWindow)
         self.HelpW = QMenu("Настройки", self.MenuForWindow)
@@ -42,6 +49,55 @@ class MainForm(QMainWindow):
         self.FieldMenu.addAction(self.SmallFieldAction)
         self.FieldMenu.addAction(self.MediumFieldAction)
         self.FieldMenu.addAction(self.LargeFieldAction)
+
+        self.SpyLabel = QLabel("Spy", self)
+        self.SpyLabel.move(1100, 50)
+        self.SpyLabel.setFixedSize(300, 100)
+        fontspy = QFont()
+        fontspy.setPointSize(60)
+        self.SpyLabel.setFont(fontspy)
+
+        self.BoxesLabel = QLabel("Boxes:", self)
+        self.BoxesLabel.move(900, 150)
+        self.BoxesLabel.setFixedSize(300, 100)
+        fontbox = QFont()
+        fontbox.setPointSize(60)
+        self.BoxesLabel.setFont(fontbox)
+
+        self.GoalLabel = QLabel("Goal:", self)
+        self.GoalLabel.move(900, 250)
+        self.GoalLabel.setFixedSize(300, 100)
+        fontgoal = QFont()
+        fontgoal.setPointSize(60)
+        self.GoalLabel.setFont(fontgoal)
+
+        self.ScoreLabel = QLabel("Score:", self)
+        self.ScoreLabel.move(900, 350)
+        self.ScoreLabel.setFixedSize(300, 100)
+        fontscore = QFont()
+        fontscore.setPointSize(60)
+        self.ScoreLabel.setFont(fontscore)
+
+        self.BoxesValue = QLabel("0", self)
+        self.BoxesValue.move(1150, 150)
+        self.BoxesValue.setFixedSize(300, 100)
+        fontboxvalue = QFont()
+        fontboxvalue.setPointSize(60)
+        self.BoxesValue.setFont(fontboxvalue)
+
+        self.GoalValue = QLabel("0", self)
+        self.GoalValue.move(1100, 250)
+        self.GoalValue.setFixedSize(300, 100)
+        fontgoalvalue = QFont()
+        fontgoalvalue.setPointSize(60)
+        self.GoalValue.setFont(fontgoalvalue)
+
+        self.ScoreValue = QLabel("0", self)
+        self.ScoreValue.move(1150, 350)
+        self.ScoreValue.setFixedSize(300, 100)
+        fontscorevalue = QFont()
+        fontscorevalue.setPointSize(60)
+        self.ScoreValue.setFont(fontscorevalue)
 
         self.show()
 

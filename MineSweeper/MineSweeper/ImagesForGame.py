@@ -1,21 +1,22 @@
-from PyQt5.QtGui import QIcon 
+from PyQt5.QtGui import QIcon
 
-class IconsForGame():
-    Mine, Player, Cross, Skull = QIcon('Images/Mine.png'), QIcon('Images/Player.png'), QIcon('Images/Cross.png'), QIcon('Images/Skull.jpg')
+class IconsForGame(object):
+    """description of class"""
+    ImgMine, ImgCross, ImgPlayer, ImgSkull = QIcon('Images/Mine.png'), QIcon('Images/Cross.png'), QIcon('Images/Player.png'), QIcon('Images/Skull.jpg')
 
-    @property
-    def ImgMine()->QIcon:
-        return IconsForGame.Mine
+    @staticmethod
+    def GetMine() -> QIcon:
+        return IconsForGame.ImgMine
 
-    @property
-    def ImgPlayer()->QIcon:
-        return IconsForGame.Player
+    @staticmethod
+    def GetCross() -> QIcon:
+        return IconsForGame.ImgCross
 
-    @property
-    def ImgCross()->QIcon:
-        return IconsForGame.Cross
+    @staticmethod
+    def GetPlayer() -> QIcon:
+        return IconsForGame.ImgPlayer
 
-    @property
-    def ImgSkull()->QIcon:
-        return IconsForGame.Skull
+    @staticmethod
+    def GetSkull() -> QIcon:
+        return IconsForGame.ImgSkull
 

@@ -1,17 +1,13 @@
-from Player import *
-from FieldCell import FieldCell
 from Game import *
 
-@staticmethod
-def isClickedAroundPlayer(cell:FieldCell)->tuple:
-        if (Player.player.i - cell.i < -1 or Player.player.i - cell.i > 1) and (Player.player.j - cell.j < -1 or Player.player.j - cell.j > 1):
-            return False, None, None
-        else:
-            return True, Player.player.i - cell.i, Player.player.j - cell.j
-
-@staticmethod
-def isBorderOfField(cell:FieldCell)->bool:
-    if cell.i == 0 or cell.i == Game.get_height() or cell.j == 0 or cell.j == Game.get_width():
+def isClickedAroundPlayer(player, cell) -> bool:
+    if ((-1 <= player.get_X - cell.X <= 1) and (player.get_Y - cell.Y == -1 or player.get_Y - cell.Y == 1)) or ((player.get_X - cell.X == 1 or player.get_X - cell.X == -1) and player.get_Y - cell.Y == 0):
         return True
-    else:
-        return False
+    return False
+
+def isBorderOfField(cell) -> bool:
+    if cell.X == 0 or cell.X == MyGame.get_height() or cell.Y == 0 or cell.Y == MyGame.get_width():
+        return True
+    return False
+
+
