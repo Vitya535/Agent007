@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMenuBar, QMainWindow, QMenu, QAction, QLabel
+from PyQt5.QtWidgets import QApplication, QMenuBar, QMainWindow, QMenu, QAction, QLabel, QPushButton
 from PyQt5.QtGui import QFont
 from RulesWindow import RulesWindow
 from Game import MyGame
@@ -9,20 +9,30 @@ class MainForm(QMainWindow):
         super().__init__()
         self.initUI()
 
+    def ResetMyGame(self):
+        MyGame._MyGame__instance = None
+        MyGame.inst(MyGame.bufer.get_width, MyGame.bufer.get_height, MyGame.bufer.get_mines_count, self)
+
     def SmallFieldClicked(self):
         MyGame.inst(10, 10, 5, self)
         self.BoxesValue.setText("94")
-        self.GoalValue.setText("23")     
+        self.GoalValue.setText("23")
+        self.BoxesPercent.setText("94%")
+        self.GoalPercent.setText("23%")
 
     def MediumFieldClicked(self):
         MyGame.inst(15, 15, 7, self)
         self.BoxesValue.setText("217")
         self.GoalValue.setText("54") 
+        self.BoxesPercent.setText(str(int(217/225*100)) + "%")
+        self.GoalPercent.setText(str(int(54/225*100)) + "%")
 
     def LargeFieldClicked(self):
         MyGame.inst(20, 20, 10, self)
         self.BoxesValue.setText("389")
-        self.GoalValue.setText("97") 
+        self.GoalValue.setText("97")
+        self.BoxesPercent.setText(str(int(389/400*100)) + "%")
+        self.GoalPercent.setText(str(int(97/400*100)) + "%")
 
     def initUI(self):
         self.setMinimumSize(400, 400)
@@ -85,6 +95,13 @@ class MainForm(QMainWindow):
         fontboxvalue.setPointSize(60)
         self.BoxesValue.setFont(fontboxvalue)
 
+        self.BoxesPercent = QLabel("0%", self)
+        self.BoxesPercent.move(1250, 175)
+        self.BoxesPercent.setFixedSize(150, 50)
+        fontboxespercent = QFont()
+        fontboxespercent.setPointSize(30)
+        self.BoxesPercent.setFont(fontboxespercent)
+
         self.GoalValue = QLabel("0", self)
         self.GoalValue.move(1100, 250)
         self.GoalValue.setFixedSize(300, 100)
@@ -92,12 +109,27 @@ class MainForm(QMainWindow):
         fontgoalvalue.setPointSize(60)
         self.GoalValue.setFont(fontgoalvalue)
 
+        self.GoalPercent = QLabel("0%", self)
+        self.GoalPercent.move(1200, 275)
+        self.GoalPercent.setFixedSize(150, 50)
+        fontgoalpercent = QFont()
+        fontgoalpercent.setPointSize(30)
+        self.GoalPercent.setFont(fontgoalpercent)
+
         self.ScoreValue = QLabel("0", self)
         self.ScoreValue.move(1150, 350)
         self.ScoreValue.setFixedSize(300, 100)
         fontscorevalue = QFont()
         fontscorevalue.setPointSize(60)
         self.ScoreValue.setFont(fontscorevalue)
+
+        self.ResetButton = QPushButton("Reset", self)
+        self.ResetButton.move(1000, 500)
+        self.ResetButton.setFixedSize(300, 100)
+        fontreset = QFont()
+        fontreset.setPointSize(60)
+        self.ResetButton.setFont(fontreset)
+        self.ResetButton.clicked.connect(self.ResetMyGame)
 
         self.show()
 
