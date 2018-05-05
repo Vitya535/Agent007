@@ -84,6 +84,7 @@ class MainForm(QMainWindow):
         self.FieldMenu.addAction(self.LargeFieldAction)
 
         self.ResetButton.clicked.connect(self.reset_my_game)
+        self.field.hide()
 
         self.showMaximized()
 
