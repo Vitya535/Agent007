@@ -5,7 +5,7 @@
     <ProjectGuid>cf6fa1c1-ccd7-4f84-a803-7d250b8629d3</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Agent.py</StartupFile>
+    <StartupFile>agent.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,28 +25,16 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Agent.py">
+    <Compile Include="agent.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FieldCell.py">
+    <Compile Include="game.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Game.py">
+    <Compile Include="images_for_game.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ImagesForGame.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Mine.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Player.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RulesWindow.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Utils.py">
+    <Compile Include="utils.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

@@ -1,13 +1,14 @@
-from Game import *
+"""
+Здесь расположены функции,
+которые помогают в реализации
+игры
+"""
 
-def isClickedAroundPlayer(player, cell) -> bool:
-    if ((-1 <= player.get_X - cell.X <= 1) and (player.get_Y - cell.Y == -1 or player.get_Y - cell.Y == 1)) or ((player.get_X - cell.X == 1 or player.get_X - cell.X == -1) and player.get_Y - cell.Y == 0):
+
+def is_border_of_field(cell, player, game) -> bool:
+    """функция определяет, является ли клетка границей поля"""
+    if (-1 <= player.i - cell.coord_i() <= 1 and -1 <= player.j - cell.coord_j() <= 1) and \
+            (cell.coord_i() == 0 or cell.coord_i() == game.get_height() or cell.coord_j() == 0 or
+             cell.coord_j() == game.get_width()):
         return True
     return False
-
-def isBorderOfField(cell) -> bool:
-    if cell.X == 0 or cell.X == MyGame.get_height() or cell.Y == 0 or cell.Y == MyGame.get_width():
-        return True
-    return False
-
-
