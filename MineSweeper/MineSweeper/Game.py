@@ -3,8 +3,10 @@
 также он содержит в себе различные типы
 ячеек (кнопок)
 """
-from random import randint
+from random import randint, choice
 from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtCore import QSize
+from MineSweeper.images_for_game import IconsForGame
 from MineSweeper.utils import is_border_of_field
 
 
@@ -31,6 +33,7 @@ class MyGame:
         """реализация одиночки для инициализации игры"""
         if MyGame.__instance is None:
             MyGame.__instance = MyGame(width, height, mines_count, main_window)
+            MyPlayer.player = None
             MyGame.buf_instance = MyGame(width, height, mines_count, main_window)
         return MyGame.__instance
 
@@ -44,17 +47,26 @@ class MyGame:
         self.main_window.field.setFixedSize(38 * width, 38 * height)
         self.count_box = width * height - mines_count - 1
         self.score = 0
+        self.main_window.BoxesValue.setText(str(self.count_box))
+        self.main_window.GoalValue.setText(str(int(self.count_box / 4)))
+        self.main_window.BoxesPercent.setText(str(int((self.count_box / (width * height) * 100))) + "%")
+        self.main_window.GoalPercent.setText(str(int((self.count_box / (width * height) * 25))) + "%")
+        self.main_window.BoxesValue.adjustSize()
+        self.main_window.GoalValue.adjustSize()
+        self.main_window.BoxesPercent.adjustSize()
+        self.main_window.GoalPercent.adjustSize()
         self.main_window.field.setCellWidget(0, 0, MyPlayer.inst(main_window))
         counter_of_mines, k = 0, 1
-        for i in range(height):  # строки  # кажется здесь как-то не так ячейки в поле заполняются
-            for j in range(k, width):  # столбцы
+        for i in range(height):
+            for j in range(k, width):
                 rand_for_mine = randint(1, 7)
                 if rand_for_mine == 1 and counter_of_mines < mines_count:
-                    self.main_window.field.setCellWidget(i, j, MyMine(i, j, main_window))
+                    self.main_window.field.setCellWidget(i, j, MyMine(main_window))
                     counter_of_mines += 1
                 else:
-                    rand_for_cells = randint(1, 6)
-                    self.main_window.field.setCellWidget(i, j, MyCell(rand_for_cells, i, j, main_window))
+                    img_digit = choice(IconsForGame.ImgDigits)
+                    _steps = IconsForGame.ImgDigits.index(img_digit) + 1
+                    self.main_window.field.setCellWidget(i, j, MyCell(img_digit, _steps, i, j, main_window))
             k = 0
         self.main_window.field.show()
 
@@ -83,6 +95,9 @@ class MyGame:
         MyGame.__instance.main_window.BoxesPercent.setText(str(int(
             MyGame.__instance.count_box / (MyGame.__instance.width * MyGame.__instance.height) * 100)) +
                                                            "%")
+        MyGame.__instance.main_window.BoxesValue.adjustSize()
+        MyGame.__instance.main_window.BoxesPercent.adjustSize()
+        MyGame.__instance.main_window.ScoreValue.adjustSize()
 
 
 class MyPlayer(QPushButton):
@@ -99,13 +114,10 @@ class MyPlayer(QPushButton):
 
     def __init__(self, main_window):
         super().__init__(main_window)
-        self.init_player()
-        self.i, self.j = 0, 0
-
-    def init_player(self):
-        """инициализация клетки-игрока на поле"""
         self.setText("Player")
-        self.setFixedSize(38, 38)
+        self.setIcon(IconsForGame.get_player())
+        self.setIconSize(QSize(38, 38))
+        self.i, self.j = 0, 0
 
     @property
     def coord_i(self) -> int:
@@ -123,42 +135,42 @@ class MyPlayer(QPushButton):
         _boxes = []
         diff_row, diff_column = self.i - cell.i, self.j - cell.j
         limit_row, limit_column = self.i - diff_row * cell.count_steps, self.j - diff_column * cell.count_steps
+        self.i += diff_row
+        self.j += diff_column
         while self.i != limit_row or self.j != limit_column:
-            _cell = ins.main_window.field.cellWidget(self.i, self.j)
-            if _cell.__class__ == MyMine or is_border_of_field(diff_row, diff_column, _cell, ins) or \
-                    _cell.text() == "Cross":
-                _cell.setText("Skull")
-                MyGame.count_score_and_boxes(_boxes)
-                return
-            else:
-                if _cell.__class__ == MyCell and _cell.text() != "Player":
-                    _boxes.append(_cell.count_steps)
-                if self.i != _cell.i and self.j != _cell.j and _cell.__class__ == MyCell:
-                    _cell.clicked.disconnect(_cell.is_clicked_around_player)
-                _cell.setText("Cross")
-            self.j -= diff_column
             self.i -= diff_row
-        _cell = ins.main_window.field.cellWidget(self.i, self.j)
-        _cell.setText("Player")
-        if _cell.__class__ == MyCell:
-            _cell.clicked.disconnect(_cell.is_clicked_around_player)
-            _boxes.append(_cell.count_steps)
+            self.j -= diff_column
+            _cell = ins.main_window.field.cellWidget(self.i, self.j)
+            if _cell.__class__ == MyMine or _cell.icon().cacheKey() == IconsForGame.get_cross().cacheKey() or \
+                    is_border_of_field(diff_row, diff_column, _cell, ins):
+                if _cell.__class__ == MyCell and not (_cell.icon().cacheKey() == IconsForGame.get_player().cacheKey()):
+                    _boxes.append(_cell.count_steps)
+                _cell.setText("Skull")
+                _cell.setIcon(IconsForGame.get_skull())
+            if _cell.icon().cacheKey() == IconsForGame.get_skull().cacheKey():
+                break
+            if _cell.__class__ == MyCell:
+                _cell.setText("Cross")
+                _cell.setIcon(IconsForGame.get_cross())
+                if self.i == limit_row and self.j == limit_column:
+                    _cell.setIcon(IconsForGame.get_player())
+                    _cell.setText("Player")
+                if _cell.icon().cacheKey() != IconsForGame.get_player().cacheKey():
+                    _boxes.append(_cell.count_steps)
+                    _cell.clicked.disconnect(_cell.is_clicked_around_player)
         MyGame.count_score_and_boxes(_boxes)
 
 
 class MyCell(QPushButton):
     """класс ячейки с количеством шагов"""
 
-    def __init__(self, count_steps: int, i: int, j: int, main_window):
+    def __init__(self, img, count_steps: int, i: int, j: int, main_window):
         super().__init__(main_window)
-        self.init_field_cell(count_steps)
-        self.count_steps, self.i, self.j = count_steps, i, j
-
-    def init_field_cell(self, count_steps: int):
-        """инициализация ячейки на поле"""
-        self.setText(str(count_steps))
-        self.setFixedSize(38, 38)
+        self.setText(str(count_steps))  # это не нужно
+        self.setIcon(img)
+        self.setIconSize(QSize(38, 38))
         self.clicked.connect(self.is_clicked_around_player)
+        self.count_steps, self.i, self.j = count_steps, i, j
 
     @property
     def get_count_of_steps(self) -> int:
@@ -177,32 +189,15 @@ class MyCell(QPushButton):
 
     def is_clicked_around_player(self):
         """Проверка на нажатие кнопки рядом с игроком"""
-        if self.text() != "Cross" and \
-                MyGame.get_instance().main_window.field.cellWidget(MyPlayer.player.i,
-                                                                   MyPlayer.player.j).text() != "Skull":
-            if -1 <= MyPlayer.player.i - self.i <= 1 and -1 <= MyPlayer.player.j - self.j <= 1:
-                MyPlayer.player.move_to(self)
+        if -1 <= MyPlayer.player.i - self.i <= 1 and -1 <= MyPlayer.player.j - self.j <= 1:
+            MyPlayer.player.move_to(self)
 
 
 class MyMine(QPushButton):
     """класс ячейки-мины на поле"""
 
-    def __init__(self, i: int, j: int, main_window):
+    def __init__(self, main_window):
         super().__init__(main_window)
-        self.init_mine()
-        self.i, self.j = i, j
-
-    def init_mine(self):
-        """инициализация мины на поле"""
         self.setText("Mine")
-        self.setFixedSize(38, 38)
-
-    @property
-    def coord_i(self) -> int:
-        """возвращает координату мины по строке"""
-        return self.i
-
-    @property
-    def coord_j(self) -> int:
-        """возвращает координату мины по столбцу"""
-        return self.j
+        self.setIcon(IconsForGame.get_mine())
+        self.setIconSize(QSize(38, 38))

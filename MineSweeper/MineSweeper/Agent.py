@@ -7,7 +7,7 @@
 import sys
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from MineSweeper.game import MyGame
+from MineSweeper.game import MyGame, MyPlayer
 
 
 class MainForm(QMainWindow):
@@ -28,8 +28,10 @@ class MainForm(QMainWindow):
         """
         self.RulesWindow.hide()
         MyGame._MyGame__instance = None  # доступ может поправить?
-        MyGame.inst(MyGame.buf_instance.get_width(), MyGame.buf_instance.get_height(),
-                    MyGame.buf_instance.get_mines_count(), self)
+        MyPlayer.player = None
+        if MyGame.buf_instance is not None:
+            MyGame.inst(MyGame.buf_instance.width, MyGame.buf_instance.height,
+                        MyGame.buf_instance.mines_count, self)
 
     def small_field_clicked(self):
         """
@@ -38,10 +40,6 @@ class MainForm(QMainWindow):
         """
         self.RulesWindow.hide()
         MyGame.inst(10, 10, 5, self)
-        self.BoxesValue.setText("94")
-        self.GoalValue.setText("23")
-        self.BoxesPercent.setText("94%")
-        self.GoalPercent.setText("23%")
 
     def medium_field_clicked(self):
         """
@@ -50,10 +48,6 @@ class MainForm(QMainWindow):
         """
         self.RulesWindow.hide()
         MyGame.inst(15, 15, 7, self)
-        self.BoxesValue.setText("217")
-        self.GoalValue.setText("54")
-        self.BoxesPercent.setText(str(int(217/225*100)) + "%")
-        self.GoalPercent.setText(str(int(54/225*100)) + "%")
 
     def large_field_clicked(self):
         """
@@ -62,10 +56,6 @@ class MainForm(QMainWindow):
         """
         self.RulesWindow.hide()
         MyGame.inst(20, 20, 10, self)
-        self.BoxesValue.setText("389")
-        self.GoalValue.setText("97")
-        self.BoxesPercent.setText(str(int(389/400*100)) + "%")
-        self.GoalPercent.setText(str(int(97/400*100)) + "%")
 
     def init_ui(self):
         """
@@ -75,17 +65,12 @@ class MainForm(QMainWindow):
         """
         loadUi('MyMainForm.ui', self)
         self.RulesWindow.hide()
+        self.field.hide()
+        self.MenuForWindow.setFixedWidth(16777216)
         self.SmallFieldAction.triggered.connect(self.small_field_clicked)
         self.MediumFieldAction.triggered.connect(self.medium_field_clicked)
         self.LargeFieldAction.triggered.connect(self.large_field_clicked)
-
-        self.FieldMenu.addAction(self.SmallFieldAction)
-        self.FieldMenu.addAction(self.MediumFieldAction)
-        self.FieldMenu.addAction(self.LargeFieldAction)
-
         self.ResetButton.clicked.connect(self.reset_my_game)
-        self.field.hide()
-
         self.showMaximized()
 
 
