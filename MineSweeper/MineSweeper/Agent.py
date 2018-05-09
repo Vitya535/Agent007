@@ -27,11 +27,8 @@ class MainForm(QMainWindow):
         которое было изначально
         """
         self.RulesWindow.hide()
-        MyGame._MyGame__instance = None  # доступ может поправить?
-        MyPlayer.player = None
-        if MyGame.buf_instance is not None:
-            MyGame.inst(MyGame.buf_instance.width, MyGame.buf_instance.height,
-                        MyGame.buf_instance.mines_count, self)
+        MyGame.inst(MyGame.get_buf().get_width, MyGame.get_buf().get_height,
+                    MyGame.get_buf().get_mines_count, self)
 
     def small_field_clicked(self):
         """
